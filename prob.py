@@ -8,25 +8,25 @@ from pandas import DataFrame
 
 
 
-# id =1 
-# while id < 28:
-#   url="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_provinceData.php?country=UKR&provinceID=" + str(id) + "&year1=1981&year2=2017&type=Mean"
-#   vhi_url = urllib.request.urlopen(url)
-#   x = 'D:/Python/Scripts/srp/1-st lab/vhi_id_' + str(id) + '_' + str(datetime.now().strftime("%Y%m%d-%H%M%S")) + '.csv'
-#   out = open(x, 'wb')
-#   out.write(vhi_url.read()[:])
-#   out.close()
+id =1 
+while id < 28:
+  url="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_provinceData.php?country=UKR&provinceID=" + str(id) + "&year1=1981&year2=2017&type=Mean"
+  vhi_url = urllib.request.urlopen(url)
+  x = 'D:/Python/Scripts/srp/1-st lab/vhi_id_' + str(id) + '_' + str(datetime.now().strftime("%Y%m%d-%H%M%S")) + '.csv'
+  out = open(x, 'wb')
+  out.write(vhi_url.read()[:])
+  out.close()
 
-#   df = pd.read_table(x,
-#       sep='[ ,]+', engine='python', skipfooter = 1,
-#       names = ["year", "week", "SMN", "SMT", "VCI", "TCI", "VHI"], skiprows = [0,1])
-#   df1 = DataFrame(df)
-#   df1['ind'] = id
-#   df1.to_csv(x)
+   df = pd.read_table(x,
+       sep='[ ,]+', engine='python', skipfooter = 1,
+       names = ["year", "week", "SMN", "SMT", "VCI", "TCI", "VHI"], skiprows = [0,1])
+df1 = DataFrame(df)
+df1['ind'] = id
+df1.to_csv(x)
 	
 
-#   print ("VHI for id: " + str(id) + " is downloaded...")
-#   id += 1
+print ("VHI for id: " + str(id) + " is downloaded...")
+id += 1
 
 
 
@@ -78,7 +78,7 @@ main_frame['ind'] = main_frame['ind'].map({
 	27: 5
 	})
 
-# print(main_frame) 
+print(main_frame) 
 
 
 
@@ -92,22 +92,7 @@ def extr(main_frame, year, ind):
 	print (main_frame[(main_frame['VHI'] == max) & (main_frame['year'] == year) & (main_frame['ind'] == ind)])
 	print ('\n')
 	
-# # Maximum
-# for f in all_files:
-# 	df = pd.read_table(f, sep='[ ,]+', engine='python', skipfooter = 1,
-# 		names = ["year", "week", "SMN", "SMT", "VCI", "TCI", "VHI","ind"], skiprows = [0,1])
-# 	max = df['VHI'].max ()
-# 	print(max)
-# print('\n')
-	
-# # Minimum
 
-# for f in all_files:
-# 	df = pd.read_table(f, sep='[ ,]+', engine='python', skipfooter = 1,
-# 		names = ["year", "week", "SMN", "SMT", "VCI", "TCI", "VHI","ind"], skiprows = [0,1])
-# 	min = df['VHI'].min ()
-# 	print(min)
-# print('\n')
 
 
 def extreme_drought(main_frame, ind):
