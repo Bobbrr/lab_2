@@ -7,26 +7,26 @@ from datetime import datetime
 from pandas import DataFrame
 
 
+def download():
+	id =1 
+	while id < 28:
+	  url="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_provinceData.php?country=UKR&provinceID=" + str(id) + "&year1=1981&year2=2017&type=Mean"
+	  vhi_url = urllib.request.urlopen(url)
+	  x = 'D:/Python/Scripts/srp/1-st lab/vhi_id_' + str(id) + '_' + str(datetime.now().strftime("%Y%m%d-%H%M%S")) + '.csv'
+	  out = open(x, 'wb')
+	  out.write(vhi_url.read()[:])
+	  out.close()
 
-id =1 
-while id < 28:
-  url="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_provinceData.php?country=UKR&provinceID=" + str(id) + "&year1=1981&year2=2017&type=Mean"
-  vhi_url = urllib.request.urlopen(url)
-  x = 'D:/Python/Scripts/srp/1-st lab/vhi_id_' + str(id) + '_' + str(datetime.now().strftime("%Y%m%d-%H%M%S")) + '.csv'
-  out = open(x, 'wb')
-  out.write(vhi_url.read()[:])
-  out.close()
+	   df = pd.read_table(x,
+	       sep='[ ,]+', engine='python', skipfooter = 1,
+	       names = ["year", "week", "SMN", "SMT", "VCI", "TCI", "VHI"], skiprows = [0,1])
+	df1 = DataFrame(df)
+	df1['ind'] = id
+	df1.to_csv(x)
 
-   df = pd.read_table(x,
-       sep='[ ,]+', engine='python', skipfooter = 1,
-       names = ["year", "week", "SMN", "SMT", "VCI", "TCI", "VHI"], skiprows = [0,1])
-df1 = DataFrame(df)
-df1['ind'] = id
-df1.to_csv(x)
-	
 
-print ("VHI for id: " + str(id) + " is downloaded...")
-id += 1
+	print ("VHI for id: " + str(id) + " is downloaded...")
+	id += 1
 
 
 
@@ -106,7 +106,7 @@ def mod_drought(main_frame, ind):
     print ('\n')
 
 
-
+download()
 extr(main_frame, 2017, 3)
 extreme_drought(main_frame, 3)
 mod_drought(main_frame, 3)
